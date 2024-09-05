@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ClassiqX Web App</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<h1>Welcome to ClassiqX!</h1>
+	<div id="chat-container">
+		<div id="chat-header">Chat with ClassiqX</div>
+		<div id="chat-messages"></div>
+		<input id="chat-input" type="text" placeholder="Type a message...">
+		<button id="chat-send">Send</button>
+	</div>
+
+	<script src="(link unavailable)"></script>
+	<script>
+		// Initialize the Telegram Web App
+		Telegram.WebApp.init({
+			botId: '7181726784:AAHj57t6bdT8EihgUm0ZlSmakL3cKvwW-DI', // Replace with your bot's ID
+		});
+
+		// Get the chat container and input field
+		const chatContainer = document.getElementById('chat-container');
+		const chatInput = document.getElementById('chat-input');
+
+		// Send a message when the user clicks the send button
+		document.getElementById('chat-send').addEventListener('click', () => {
+			const message = chatInput.value.trim();
+			if (message) {
+				Telegram.WebApp.sendData({
+					type: 'message',
+					data: message,
+				});
+				chatInput.value = '';
+			}
+		});
+
+		// Receive messages from the bot
+		Telegram.WebApp.onEvent('message', (message) => {
+			const chatMessages = document.getElementById('chat-messages');
+			const messageElement = document.createElement('div');
+			messageElement.textContent = message.data;
+			chatMessages.appendChild(messageElement);
+		});
+	</script>
+</body>
+</html>
